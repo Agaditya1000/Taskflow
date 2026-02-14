@@ -62,7 +62,7 @@ export default function Layout() {
                     </div>
                     <Button variant="secondary" className="w-full text-xs" onClick={handleLogout}>
                         <LogOut size={14} />
-                        Sign Out
+                        Log Out
                     </Button>
                 </div>
             </aside>

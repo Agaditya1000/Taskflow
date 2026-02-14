@@ -76,12 +76,10 @@ export default function LoginPage() {
                         className="w-full py-3"
                         isLoading={isLoading}
                     >
-                        Sign In
+                        Log In
                     </Button>
 
-                    <div className="text-center text-xs text-white/40 mt-4">
-                        Use <span className="text-white/70">intern@demo.com</span> / <span className="text-white/70">intern123</span>
-                    </div>
+                    
                 </form>
             </div>
         </div>
