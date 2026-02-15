@@ -88,20 +88,20 @@ export default function BoardPage() {
     return (
         <div className="h-full flex flex-col">
             {/* Header / Controls */}
-            <div className="flex justify-between items-center mb-6 pl-2">
+            <div className="flex flex-col-mobile md:flex md:flex-row justify-between items-start md:items-center mb-6 pl-2 gap-4">
                 <h1 className="text-2xl font-bold text-white">My Board</h1>
-                <div className="flex gap-4">
+                <div className="flex flex-col-mobile md:flex md:flex-row gap-4 w-full-mobile md:w-auto">
                     {/* Search & Filter */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col-mobile md:flex md:flex-row items-center gap-2 w-full-mobile md:w-auto">
                         <input
                             type="text"
                             placeholder="Search tasks..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="input-field w-48"
+                            className="input-field w-full-mobile md:w-48"
                         />
                         <select
-                            className="input-field w-48 cursor-pointer"
+                            className="input-field w-full-mobile md:w-48 cursor-pointer"
                             value={filterPriority}
                             onChange={(e) => setFilterPriority(e.target.value)}
                         >
@@ -112,15 +112,17 @@ export default function BoardPage() {
                         </select>
                     </div>
 
-                    <Button variant="ghost" onClick={resetBoard} className="text-white/60 hover:text-red-400">
-                        <RotateCw size={16} />
-                        Reset
-                    </Button>
+                    <div className="flex gap-2 w-full-mobile md:w-auto justify-between md:justify-start">
+                        <Button variant="ghost" onClick={resetBoard} className="text-white/60 hover:text-red-400">
+                            <RotateCw size={16} />
+                            Reset
+                        </Button>
 
-                    <Button variant="primary" onClick={openNewTaskModal}>
-                        <Plus size={16} />
-                        New Task
-                    </Button>
+                        <Button variant="primary" onClick={openNewTaskModal}>
+                            <Plus size={16} />
+                            New Task
+                        </Button>
+                    </div>
                 </div>
             </div>
 

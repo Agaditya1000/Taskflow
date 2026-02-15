@@ -1,8 +1,11 @@
+import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../ui/Button';
-import { LogOut, LayoutDashboard, Activity } from 'lucide-react';
+import { LogOut, LayoutDashboard, Activity, Menu, X } from 'lucide-react';
 import clsx from 'clsx';
+
+import logo from '../../images/taskflowlogo.png';
 
 export default function Layout() {
     const { user, logout } = useAuth();
@@ -17,12 +20,50 @@ export default function Layout() {
 
     const isActive = (path) => location.pathname === path;
 
+
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+    // Close mobile menu when route changes
+    React.useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [location.pathname]);
+
     return (
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex h-screen overflow-hidden relative flex-col-mobile">
+            {/* Mobile Header */}
+            <div className="hidden-desktop w-full p-4 flex justify-between items-center glass-panel m-4 mb-0 z-40">
+                <img src={logo} alt="TaskFlow" className="w-32 object-contain" />
+                <Button variant="ghost" onClick={() => setIsMobileMenuOpen(true)}>
+                    <Menu size={24} />
+                </Button>
+            </div>
+
+            {/* Mobile Backdrop */}
+            {isMobileMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm hidden-desktop"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                />
+            )}
+
             {/* Sidebar */}
-            <aside className="w-64 glass-panel m-4 mr-0 flex flex-col border-r-0">
-                <div className="p-6">
-                    <h2 className="text-2xl font-bold text-gradient">TaskFlow</h2>
+            <aside className={clsx(
+                "w-64 glass-panel m-4 mr-0 flex flex-col border-r-0 transition-transform duration-300",
+                // Desktop: Always visible, static
+                "md:flex",
+                // Mobile: Fixed, transformed based on state
+                "fixed-mobile",
+                !isMobileMenuOpen && "hidden-mobile"
+            )}>
+                <div className="p-6 flex justify-between items-center">
+                    <img src={logo} alt="TaskFlow" className="w-32 md:w-40 object-contain" />
+                    {/* Mobile Close Button */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-white/60 hover:text-white hidden-desktop bg-transparent"
+                    >
+                        <X size={20} />
+                    </button>
                 </div>
 
                 <nav className="flex-1 px-4 space-y-2">
@@ -68,7 +109,7 @@ export default function Layout() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 overflow-auto p-4">
+            <main className="flex-1 overflow-auto p-4 flex flex-col w-full">
                 <Outlet />
             </main>
         </div>

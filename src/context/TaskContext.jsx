@@ -131,6 +131,10 @@ export const TaskProvider = ({ children }) => {
         const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesPriority = filterPriority === 'all' || task.priority === filterPriority;
         return matchesSearch && matchesPriority;
+    }).sort((a, b) => {
+        if (!a.dueDate) return 1;
+        if (!b.dueDate) return -1;
+        return new Date(a.dueDate) - new Date(b.dueDate);
     });
 
     const value = {
